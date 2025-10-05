@@ -2,7 +2,7 @@
 
 public class Fibonacci
 {
-    public int Fib(int n, Dictionary<int, int>? memo = null)
+    public static int Fib(int n, Dictionary<int, int>? memo = null)
     {
         if (n <= 0) return 0;
         if (n <= 2) return 1;

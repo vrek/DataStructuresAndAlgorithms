@@ -38,14 +38,13 @@ public class BinarySearchTests
         int result = BinarySearch.CountNumberOfSearchesToFindTarget(nums, target);
         Assert.Equal(expected, result);
     }
+}
 
-    public static class LargeArrayTestData
-    {
-        public static IEnumerable<object[]> Cases =>
-            [
-            [Enumerable.Range(1, 1000).ToArray(), 500, 1],   // Target in middle
+public static class LargeArrayTestData
+{
+    public static IEnumerable<object[]> Cases =>
+        [
+        [Enumerable.Range(1, 1000).ToArray(), 500, 1],   // Target in middle
             [Enumerable.Range(1, 1000).ToArray(), 1001, -1], // Target missing
             ];
-    }
-
 }

@@ -7,8 +7,7 @@ public class FibonacciTests
     [Fact]
     public void Fibonacci_Zero_ReturnsZero()
     {
-        Fibonacci solution = new();
-        int result = solution.Fib(0);
+        int result = Fibonacci.Fib(0);
         Assert.Equal(0, result);
     }
 
@@ -18,8 +17,7 @@ public class FibonacciTests
     [InlineData(8, 21)]
     public void Fibonacci_ValidInput_ReturnsExpectedResult(int n, int expected)
     {
-        Fibonacci solution = new();
-        int result = solution.Fib(n);
+        int result = Fibonacci.Fib(n);
         Assert.Equal(expected, result);
     }
 

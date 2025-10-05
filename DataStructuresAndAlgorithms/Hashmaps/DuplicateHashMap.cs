@@ -7,7 +7,11 @@ public class DuplicatesHashMap
         HashSet<int> SeenNumbers = [];
         foreach (int num in nums)
         {
-            if (SeenNumbers.Contains(num)) return true;
+            if (SeenNumbers.Contains(num))
+            {
+                return true;
+            }
+
             SeenNumbers.Add(num);
         }
         return false;

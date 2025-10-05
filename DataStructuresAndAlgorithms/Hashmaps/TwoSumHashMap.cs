@@ -9,7 +9,11 @@ public class TwoSumHashMap
         foreach (int num in nums)
         {
             int complement = target - num;
-            if (numDict.TryGetValue(complement, out int value)) return [value, index];
+            if (numDict.TryGetValue(complement, out int value))
+            {
+                return [value, index];
+            }
+
             numDict[num] = index;
             index++;
         }

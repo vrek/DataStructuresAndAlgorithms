@@ -50,10 +50,22 @@ public class SingleLinkedList
             return;
         }
         if (position > GetLength() || position < 0)
+        {
             throw new ArgumentOutOfRangeException(nameof(position), "Position is out of bounds.");
-        Node? current = Head;
+        }
+
+        if (Head == null)
+        {
+            Head = newNode;
+            return;
+        }
+        Node current = Head;
         for (int i = 0; i < position - 1; i++)
         {
+            if(current.Next == null)
+            {
+                break;
+            }
             current = current.Next;
         }
         newNode.Next = current.Next;
@@ -87,10 +99,20 @@ public class SingleLinkedList
     public int GetValueAtPosition(int position)
     {
         if (position < 0 || position >= GetLength())
+        {
             throw new ArgumentOutOfRangeException(nameof(position), "Position is out of bounds.");
-        Node? current = Head;
+        }
+        if(Head == null)
+        {
+            return -1;
+        }
+        Node current = Head;
         for (int i = 0; i < position; i++)
         {
+            if(current.Next == null)
+            {
+                break;
+            }
             current = current.Next;
         }
         return current.Value;
@@ -99,28 +121,45 @@ public class SingleLinkedList
     public void RemoveAtPosition(int position)
     {
         if (position < 0 || position >= GetLength())
+        {
             throw new ArgumentOutOfRangeException(nameof(position), "Position is out of bounds.");
+        }
+        if (Head == null)
+        {
+            throw new ArgumentOutOfRangeException(nameof(position), "List is currently null");
+        }
         if (position == 0)
         {
             Head = Head.Next;
             return;
         }
-        Node? current = Head;
+        Node current = Head;
         for (int i = 0; i < position - 1; i++)
         {
-            current = current.Next;
+            if (current.Next != null)
+            {
+                current = current.Next;
+            }
         }
         current.Next = current.Next.Next;
     }
 
     public Node? FindNodeByValue(int v)
     {
+        if(Head == null)
+        {
+            return null;
+        }
         Node current = Head;
         while (current != null)
         {
             if (current.Value == v)
             {
                 return current;
+            }
+            if(current.Next == null)
+            {
+                break;
             }
             current = current.Next;
         }
@@ -129,6 +168,10 @@ public class SingleLinkedList
 
     public List<Node> FindAllNodesByValue(int v)
     {
+        if (Head == null)
+        {
+            return [];
+        }
         Node current = Head;
         List<Node> nodes = [];
         while (current != null)
@@ -136,6 +179,10 @@ public class SingleLinkedList
             if (current.Value == v)
             {
                 nodes.Add(current);
+            }
+            if (current.Next == null)
+            {
+                break;
             }
             current = current.Next;
         }

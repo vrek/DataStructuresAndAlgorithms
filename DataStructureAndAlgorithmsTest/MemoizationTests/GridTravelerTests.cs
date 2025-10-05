@@ -12,8 +12,7 @@ public class GridTravelerTests
     [InlineData(18, 18, 2333606220)]
     public void GridTraveler_ValidInput_ReturnsExpectedResult(long m, long n, long expected)
     {
-        GridTraveler solution = new();
-        long result = solution.Travel(m, n);
+        long result = GridTraveler.Travel(m, n);
         Assert.Equal(expected, result);
     }
 
