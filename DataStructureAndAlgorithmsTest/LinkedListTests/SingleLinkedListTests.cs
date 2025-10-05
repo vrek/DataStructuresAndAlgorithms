@@ -7,7 +7,7 @@ public class RemoveAtPositionTests
     [Fact]
     public void RemoveAtPosition_ShouldRemoveNodeAtGivenPosition()
     {
-        SingleLinkedList list = new();
+        SingleLinkedList<int> list = new();
         list.InsertAtStart(1);
         list.InsertAtStart(2);
         list.InsertAtStart(3); // Final list: 3 → 2 → 1
@@ -22,13 +22,13 @@ public class RemoveAtPositionTests
     [Fact]
     public void RemoveAtPosition_InvalidPosition_ShouldThrowArgumentOutOfRangeException()
     {
-        SingleLinkedList list = new();
+        SingleLinkedList<int> list = new();
         list.InsertAtStart(1);
         list.InsertAtStart(2);
-        list.InsertAtStart(3); // Final list: 3 → 2 → 1
-        Assert.Throws<ArgumentOutOfRangeException>(() => list.RemoveAtPosition(-1)); // Negative index
-        Assert.Throws<ArgumentOutOfRangeException>(() => list.RemoveAtPosition(3));  // Equal to length
-        Assert.Throws<ArgumentOutOfRangeException>(() => list.RemoveAtPosition(100)); // Far beyond length
+        list.InsertAtStart(3);
+        Assert.Throws<ArgumentOutOfRangeException>(() => list.RemoveAtPosition(-1)); 
+        Assert.Throws<ArgumentOutOfRangeException>(() => list.RemoveAtPosition(3));
+        Assert.Throws<ArgumentOutOfRangeException>(() => list.RemoveAtPosition(100));
     }
 }
 
@@ -38,9 +38,9 @@ public class GetValueAtPositionTests
     {
         public static TheoryData<int> Cases =>
     [
-        -1,    // Negative index
-        3,     // Equal to list length (out of bounds)
-        100    // Way out of bounds
+        -1,
+        3,
+        100
     ];
     }
 
@@ -49,9 +49,9 @@ public class GetValueAtPositionTests
     {
         public static TheoryData<int, int> Cases => new()
         {
-            { 0, 1 }, // Head
-            { 1, 2 }, // Middle
-            { 2, 3 }, // Tail
+            { 0, 1 },
+            { 1, 2 },
+            { 2, 3 },
         };
     }
 
@@ -61,10 +61,10 @@ public class GetValueAtPositionTests
     [MemberData(nameof(ValidPositionTestData.Cases), MemberType = typeof(ValidPositionTestData))]
     public void GetValueAtPosition_ShouldReturnCorrectValue(int position, int expectedValue)
     {
-        SingleLinkedList list = new();
+        SingleLinkedList<int> list = new();
         list.InsertAtEnd(1);
         list.InsertAtEnd(2);
-        list.InsertAtEnd(3); // List: 1 → 2 → 3
+        list.InsertAtEnd(3);
 
         int actualValue = list.GetValueAtPosition(position);
         Assert.Equal(expectedValue, actualValue);
@@ -74,10 +74,10 @@ public class GetValueAtPositionTests
     [MemberData(nameof(InvalidPositionTestData.Cases), MemberType = typeof(InvalidPositionTestData))]
     public void GetValueAt_InvalidPosition_ShouldThrowArgumentOutOfRangeException(int invalidPosition)
     {
-        SingleLinkedList list = new();
+        SingleLinkedList<int> list = new();
         list.InsertAtStart(3);
         list.InsertAtStart(2);
-        list.InsertAtStart(1); // List: 1 → 2 → 3
+        list.InsertAtStart(1);
 
         Assert.Throws<ArgumentOutOfRangeException>(() => list.GetValueAtPosition(invalidPosition));
     }
@@ -85,7 +85,7 @@ public class GetValueAtPositionTests
     [Fact]
     public void GetValueAtPosition_EmptyList_ShouldThrowArgumentOutOfRangeException()
     {
-        SingleLinkedList list = new();
+        SingleLinkedList<int> list = new();
         Assert.Throws<ArgumentOutOfRangeException>(() => list.GetValueAtPosition(0));
     }
 }
@@ -95,10 +95,10 @@ public class InsertAtStartTests
     [Fact]
     public void InsertAtStart_ShouldInsertNodesAtHeadInReverseOrder()
     {
-        SingleLinkedList list = new();
+        SingleLinkedList<int> list = new();
         list.InsertAtStart(1);
         list.InsertAtStart(2);
-        list.InsertAtStart(3); // Final list: 3 → 2 → 1
+        list.InsertAtStart(3);
 
         Assert.NotNull(list.Head);
         Assert.Equal(3, list.Head.Value);
@@ -116,10 +116,10 @@ public class InsertAtStartTests
     [Fact]
     public void InsertAtStart_ShouldAddNodesToHead()
     {
-        SingleLinkedList list = new();
+        SingleLinkedList<int> list = new();
         list.InsertAtStart(3);
         list.InsertAtStart(2);
-        list.InsertAtStart(1); // Expected: 1 → 2 → 3
+        list.InsertAtStart(1);
 
         Assert.Equal([1, 2, 3], list.ToArray());
     }
@@ -127,7 +127,7 @@ public class InsertAtStartTests
     [Fact]
     public void InsertAtStart_EmptyList_ShouldCreateSingleNode()
     {
-        SingleLinkedList list = new();
+        SingleLinkedList<int> list = new();
         list.InsertAtStart(42);
 
         Assert.Equal(1, list.GetLength());
@@ -137,7 +137,7 @@ public class InsertAtStartTests
     [Fact]
     public void InsertAtStart_ShouldHandleNegativeAndZeroValues()
     {
-        SingleLinkedList list = new();
+        SingleLinkedList<int> list = new();
         list.InsertAtStart(-1);
         list.InsertAtStart(0);
         list.InsertAtStart(-99);
@@ -149,7 +149,7 @@ public class InsertAtStartTests
     [Fact]
     public void InsertAtStart_ManyInsertions_ShouldMaintainOrder()
     {
-        SingleLinkedList list = new();
+        SingleLinkedList<int> list = new();
         for (int i = 100; i >= 1; i--)
         {
             list.InsertAtStart(i);
@@ -162,12 +162,12 @@ public class InsertAtStartTests
     [Fact]
     public void InsertAtStart_ThenInsertAtPosition_ShouldPreserveStructure()
     {
-        SingleLinkedList list = new();
+        SingleLinkedList<int> list = new();
         list.InsertAtStart(3);
         list.InsertAtStart(2);
-        list.InsertAtStart(1); 
+        list.InsertAtStart(1);
 
-        list.InsertAtPosition(99, 1); 
+        list.InsertAtPosition(99, 1);
 
         Assert.Equal(4, list.GetLength());
         Assert.Equal([1, 99, 2, 3], list.ToArray());
@@ -176,7 +176,7 @@ public class InsertAtStartTests
     [Fact]
     public void InsertAtStart_Duplicates_ShouldBeHandledCorrectly()
     {
-        SingleLinkedList list = new();
+        SingleLinkedList<int> list = new();
         list.InsertAtStart(5);
         list.InsertAtStart(5);
         list.InsertAtStart(5);
@@ -189,7 +189,7 @@ public class InsertAtStartTests
     [MemberData(nameof(LinkedListLengthTestData.Cases), MemberType = typeof(LinkedListLengthTestData))]
     public void GivenVariousInputs_InsertAtStartShouldBuildCorrectLength(int[] values, int expectedLength)
     {
-        SingleLinkedList list = new();
+        SingleLinkedList<int> list = new();
 
         foreach (int value in values)
         {
@@ -206,9 +206,9 @@ public class InsertAtPositionTests
     [Fact]
     public void InsertAtPosition_Zero_ShouldInsertAtHead()
     {
-        SingleLinkedList list = new();
+        SingleLinkedList<int> list = new();
         list.InsertAtStart(2);
-        list.InsertAtStart(1); 
+        list.InsertAtStart(1);
 
         list.InsertAtPosition(99, 0);
 
@@ -219,12 +219,12 @@ public class InsertAtPositionTests
     [Fact]
     public void InsertAtPosition_Middle_ShouldInsertCorrectly()
     {
-        SingleLinkedList list = new();
+        SingleLinkedList<int> list = new();
         list.InsertAtStart(3);
         list.InsertAtStart(2);
-        list.InsertAtStart(1); 
+        list.InsertAtStart(1);
 
-        list.InsertAtPosition(99, 1); 
+        list.InsertAtPosition(99, 1);
 
         Assert.Equal(4, list.GetLength());
         Assert.Equal([1, 99, 2, 3], list.ToArray());
@@ -233,11 +233,11 @@ public class InsertAtPositionTests
     [Fact]
     public void InsertAtPosition_End_ShouldAppend()
     {
-        SingleLinkedList list = new();
+        SingleLinkedList<int> list = new();
         list.InsertAtStart(2);
-        list.InsertAtStart(1); 
+        list.InsertAtStart(1);
 
-        list.InsertAtPosition(99, 2); 
+        list.InsertAtPosition(99, 2);
 
         Assert.Equal(3, list.GetLength());
         Assert.Equal([1, 2, 99], list.ToArray());
@@ -246,15 +246,15 @@ public class InsertAtPositionTests
     [Fact]
     public void InsertAtPosition_InvalidNegative_ShouldThrow()
     {
-        SingleLinkedList list = new();
+        SingleLinkedList<int> list = new();
         Assert.Throws<ArgumentOutOfRangeException>(() => list.InsertAtPosition(99, -1));
     }
 
     [Fact]
     public void InsertAtPosition_TooFar_ShouldThrow()
     {
-        SingleLinkedList list = new();
-        list.InsertAtStart(1); 
+        SingleLinkedList<int> list = new();
+        list.InsertAtStart(1);
 
         Assert.Throws<ArgumentOutOfRangeException>(() => list.InsertAtPosition(99, 5));
     }
@@ -262,7 +262,7 @@ public class InsertAtPositionTests
     [Fact]
     public void InsertAtPosition_EmptyListZero_ShouldWork()
     {
-        SingleLinkedList list = new();
+        SingleLinkedList<int> list = new();
         list.InsertAtPosition(99, 0);
 
         Assert.Equal(1, list.GetLength());
@@ -272,7 +272,7 @@ public class InsertAtPositionTests
     [Fact]
     public void InsertAtEveryValidPosition_ShouldMaintainCorrectOrder()
     {
-          SingleLinkedList list = new();
+        SingleLinkedList<int> list = new();
         list.InsertAtStart(50);
         list.InsertAtStart(40);
         list.InsertAtStart(30);
@@ -282,16 +282,16 @@ public class InsertAtPositionTests
 
         for (int position = 0; position <= list.GetLength(); position++)
         {
-            SingleLinkedList testList = CloneList(list); 
+            SingleLinkedList<int> testList = CloneList(list);
             testList.InsertAtPosition(99, position);
 
             int[] expected = BuildExpectedArrayWithInsert([10, 20, 30, 40, 50], 99, position);
             Assert.Equal(expected, testList.ToArray());
         }
     }
-    private static SingleLinkedList CloneList(SingleLinkedList original)
+    private static SingleLinkedList<int> CloneList(SingleLinkedList<int> original)
     {
-        SingleLinkedList clone = new();
+        SingleLinkedList<int> clone = new();
         int[] values = original.ToArray();
         for (int i = values.Length - 1; i >= 0; i--)
         {
@@ -314,10 +314,10 @@ public class ToArrayTests
     [Fact]
     public void ToArrayReturnsCorrectArray()
     {
-        SingleLinkedList list = new();
+        SingleLinkedList<int> list = new();
         list.InsertAtStart(3);
         list.InsertAtStart(2);
-        list.InsertAtStart(1); 
+        list.InsertAtStart(1);
         int[] array = list.ToArray();
         Assert.Equal([1, 2, 3], array);
     }
@@ -328,7 +328,7 @@ public class InsertAtEndTests
     [Fact]
     public void InsertAtEnd_SingleValue_ShouldCreateSingleNode()
     {
-        SingleLinkedList list = new();
+        SingleLinkedList<int> list = new();
         list.InsertAtEnd(42);
 
         Assert.Equal(1, list.GetLength());
@@ -338,7 +338,7 @@ public class InsertAtEndTests
     [Fact]
     public void InsertAtEnd_MultipleValues_ShouldAppendInOrder()
     {
-        SingleLinkedList list = new();
+        SingleLinkedList<int> list = new();
         list.InsertAtEnd(1);
         list.InsertAtEnd(2);
         list.InsertAtEnd(3);
@@ -350,11 +350,11 @@ public class InsertAtEndTests
     [Fact]
     public void InsertAtEnd_AfterInsertAtStart_ShouldAppendCorrectly()
     {
-        SingleLinkedList list = new();
+        SingleLinkedList<int> list = new();
         list.InsertAtStart(2);
         list.InsertAtStart(1);
 
-        list.InsertAtEnd(3); 
+        list.InsertAtEnd(3);
 
         Assert.Equal(3, list.GetLength());
         Assert.Equal([1, 2, 3], list.ToArray());
@@ -363,7 +363,7 @@ public class InsertAtEndTests
     [Fact]
     public void InsertAtEnd_DuplicateValues_ShouldBeHandledCorrectly()
     {
-        SingleLinkedList list = new();
+        SingleLinkedList<int> list = new();
         list.InsertAtEnd(5);
         list.InsertAtEnd(5);
         list.InsertAtEnd(5);
@@ -375,7 +375,7 @@ public class InsertAtEndTests
     [Fact]
     public void InsertAtEnd_StressTest_ShouldMaintainOrder()
     {
-        SingleLinkedList list = new();
+        SingleLinkedList<int> list = new();
         for (int i = 1; i <= 100; i++)
         {
             list.InsertAtEnd(i);
@@ -391,7 +391,7 @@ public class FindNodeWithValueTests
     [Fact]
     public void FindNodeByValue_ReturnsCorrectNode_WhenValueExists()
     {
-        SingleLinkedList list = new();
+        SingleLinkedList<int> list = new();
         list.InsertAtEnd(10);
         list.InsertAtEnd(20);
         list.InsertAtEnd(30);
@@ -405,7 +405,7 @@ public class FindNodeWithValueTests
     [Fact]
     public void FindNodeByValue_ReturnsNull_WhenValueDoesNotExist()
     {
-        SingleLinkedList list = new();
+        SingleLinkedList<int> list = new();
         list.InsertAtEnd(10);
         list.InsertAtEnd(20);
 
@@ -417,7 +417,7 @@ public class FindNodeWithValueTests
     [Fact]
     public void FindNodeByValue_ReturnsFirstMatch_WhenDuplicatesExist()
     {
-        SingleLinkedList list = new();
+        SingleLinkedList<int> list = new();
         list.InsertAtEnd(5);
         list.InsertAtEnd(10);
         list.InsertAtEnd(10);
@@ -437,7 +437,7 @@ public class FindAllNodesWithValueTests
     [Fact]
     public void FindAllNodesByValue_ReturnsEmptyList_WhenListIsEmpty()
     {
-        SingleLinkedList? list = new();
+        SingleLinkedList<int>? list = new();
         var result = list.FindAllNodesByValue(10);
 
         Assert.Empty(result);
@@ -446,7 +446,7 @@ public class FindAllNodesWithValueTests
     [Fact]
     public void FindAllNodesByValue_ReturnsSingleMatch_WhenValueExistsOnce()
     {
-        SingleLinkedList list = new();
+        SingleLinkedList<int> list = new();
         list.InsertAtEnd(5);
         list.InsertAtEnd(10);
         list.InsertAtEnd(15);
@@ -460,7 +460,7 @@ public class FindAllNodesWithValueTests
     [Fact]
     public void FindAllNodesByValue_ReturnsMultipleMatches_WhenValueExistsMultipleTimes()
     {
-        SingleLinkedList list = new();
+        SingleLinkedList<int> list = new();
         list.InsertAtEnd(10);
         list.InsertAtEnd(20);
         list.InsertAtEnd(10);
@@ -476,7 +476,7 @@ public class FindAllNodesWithValueTests
     [Fact]
     public void FindAllNodesByValue_ReturnsEmptyList_WhenValueNotFound()
     {
-        SingleLinkedList list = new();
+        SingleLinkedList<int> list = new();
         list.InsertAtEnd(1);
         list.InsertAtEnd(2);
         list.InsertAtEnd(3);
@@ -492,7 +492,7 @@ public class ReverseLinkedListTests
     [Fact]
     public void Reverse_EmptyList_RemainsEmpty()
     {
-        SingleLinkedList list = new();
+        SingleLinkedList<int> list = new();
         list.Reverse();
 
         Assert.Equal(0, list.GetLength());
@@ -502,7 +502,7 @@ public class ReverseLinkedListTests
     [Fact]
     public void Reverse_SingleNodeList_RemainsUnchanged()
     {
-        SingleLinkedList list = new();
+        SingleLinkedList<int> list = new();
         list.InsertAtEnd(42);
         list.Reverse();
 
@@ -514,12 +514,12 @@ public class ReverseLinkedListTests
     [Fact]
     public void Reverse_MultipleNodes_ReversesOrder()
     {
-        SingleLinkedList list = new();
+        SingleLinkedList<int> list = new();
         list.InsertAtEnd(1);
         list.InsertAtEnd(2);
-        list.InsertAtEnd(3); 
+        list.InsertAtEnd(3);
 
-        list.Reverse(); 
+        list.Reverse();
 
         int[] values = list.ToArray();
         Assert.Equal([3, 2, 1], values);
@@ -528,7 +528,7 @@ public class ReverseLinkedListTests
     [Fact]
     public void Reverse_Twice_RestoresOriginalOrder()
     {
-        SingleLinkedList list = new();
+        SingleLinkedList<int> list = new();
         list.InsertAtEnd(10);
         list.InsertAtEnd(20);
         list.InsertAtEnd(30);
@@ -556,3 +556,62 @@ public static class LinkedListLengthTestData
     private static readonly int[] p1Array = [1, 2, 3];
 }
 
+public class TraversalAndInspectionTests
+{
+    private static SingleLinkedList<int> CreateList(params int[] values)
+    {
+        SingleLinkedList<int> list = new();
+        foreach (int v in values)
+        {
+            list.InsertAtEnd(v);
+        }
+
+        return list;
+    }
+
+    [Fact]
+    public void IsEmpty_ShouldReturnTrue_WhenListIsEmpty()
+    {
+        SingleLinkedList<int> list = new();
+        Assert.True(list.IsEmpty());
+    }
+
+    [Fact]
+    public void IsEmpty_ShouldReturnFalse_WhenListHasElements()
+    {
+        var list = CreateList(42);
+        Assert.False(list.IsEmpty());
+    }
+
+    [Theory]
+    [InlineData(5, new[] { 1, 2, 3, 4, 5 }, true)]
+    [InlineData(0, new[] { 1, 2, 3 }, false)]
+    public void Contains_ShouldReturnCorrectResult(int value, int[] values, bool expected)
+    {
+        var list = CreateList(values);
+        Assert.Equal(expected, list.Contains(value));
+    }
+
+    [Theory]
+    [InlineData(30, new[] { 10, 20, 30, 40 }, 2)]
+    [InlineData(99, new[] { 1, 2, 3 }, -1)]
+    public void IndexOf_ShouldReturnCorrectIndex(int value, int[] values, int expected)
+    {
+        var list = CreateList(values);
+        Assert.Equal(expected, list.IndexOf(value));
+    }
+
+    [Fact]
+    public void ToArray_ShouldReturnCorrectSequence()
+    {
+        var list = CreateList(1, 2, 3);
+        Assert.Equal([1, 2, 3], list.ToArray());
+    }
+
+    [Fact]
+    public void ToArray_ShouldReturnEmptyArray_WhenListIsEmpty()
+    {
+        SingleLinkedList<int> list = new();
+        Assert.Empty(list.ToArray());
+    }
+}

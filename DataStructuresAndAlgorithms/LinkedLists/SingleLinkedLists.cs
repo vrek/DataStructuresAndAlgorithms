@@ -1,12 +1,13 @@
 ﻿namespace DataStructuresAndAlgorithms.LinkedLists;
 
-public class SingleLinkedList
+public class SingleLinkedList<T>
 {
-    public class Node(int value)
+    public class Node(T value)
     {
-        public int Value = value;
+        public T Value = value;
         public Node? Next = null;
     }
+
 
     public Node? Head;
 
@@ -15,7 +16,7 @@ public class SingleLinkedList
         Head = null;
     }
 
-    public void InsertAtStart(int value)
+    public void InsertAtStart(T value)
     {
         Node newNode = new(value)
         {
@@ -24,7 +25,7 @@ public class SingleLinkedList
         Head = newNode;
     }
 
-    public void InsertAtEnd(int value)
+    public void InsertAtEnd(T value)
     {
         Node newNode = new(value);
         if (Head == null)
@@ -40,7 +41,7 @@ public class SingleLinkedList
         current.Next = newNode;
     }
 
-    public void InsertAtPosition(int value, int position)
+    public void InsertAtPosition(T value, int position)
     {
         Node newNode = new(value);
         if (position == 0)
@@ -62,7 +63,7 @@ public class SingleLinkedList
         Node current = Head;
         for (int i = 0; i < position - 1; i++)
         {
-            if(current.Next == null)
+            if (current.Next == null)
             {
                 break;
             }
@@ -72,9 +73,9 @@ public class SingleLinkedList
         current.Next = newNode;
     }
 
-    public int[] ToArray()
+    public T[] ToArray()
     {
-        List<int> values = [];
+        List<T> values = [];
         Node? current = Head;
         while (current != null)
         {
@@ -83,6 +84,7 @@ public class SingleLinkedList
         }
         return [.. values];
     }
+
 
     public int GetLength()
     {
@@ -96,20 +98,16 @@ public class SingleLinkedList
         return length;
     }
 
-    public int GetValueAtPosition(int position)
+    public T GetValueAtPosition(int position)
     {
         if (position < 0 || position >= GetLength())
         {
             throw new ArgumentOutOfRangeException(nameof(position), "Position is out of bounds.");
         }
-        if(Head == null)
-        {
-            return -1;
-        }
         Node current = Head;
         for (int i = 0; i < position; i++)
         {
-            if(current.Next == null)
+            if (current.Next == null)
             {
                 break;
             }
@@ -144,20 +142,20 @@ public class SingleLinkedList
         current.Next = current.Next.Next;
     }
 
-    public Node? FindNodeByValue(int v)
+    public Node? FindNodeByValue(T value)
     {
-        if(Head == null)
+        if (Head == null)
         {
             return null;
         }
         Node current = Head;
         while (current != null)
         {
-            if (current.Value == v)
+            if (EqualityComparer<T>.Default.Equals(current.Value, value))
             {
                 return current;
             }
-            if(current.Next == null)
+            if (current.Next == null)
             {
                 break;
             }
@@ -166,7 +164,7 @@ public class SingleLinkedList
         return null;
     }
 
-    public List<Node> FindAllNodesByValue(int v)
+    public List<Node> FindAllNodesByValue(T value)
     {
         if (Head == null)
         {
@@ -176,7 +174,8 @@ public class SingleLinkedList
         List<Node> nodes = [];
         while (current != null)
         {
-            if (current.Value == v)
+            if (EqualityComparer<T>.Default.Equals(current.Value, value))
+
             {
                 nodes.Add(current);
             }
@@ -204,7 +203,50 @@ public class SingleLinkedList
 
         Head = prev;
     }
+    public bool Contains(T value)
+    {
+        if (FindNodeByValue(value) != null)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    public bool IsEmpty()
+    {
+        if (Head == null)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public int IndexOf(T value)
+    {
+        if (Head == null)
+        {
+            return -1;
+        }
+        Node current = Head;
+        int index = 0;
+        while (current != null)
+        {
+            if (EqualityComparer<T>.Default.Equals(current.Value, value))
+            {
+                return index;
+            }
+            if (current.Next == null)
+            {
+                break;
+            }
+            current = current.Next;
+            index++;
+        }
+        return -1;
+    }
 }
-
-
-
