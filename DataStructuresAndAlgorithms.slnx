@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="DataStructureAndAlgorithmsTest/DataStructureAndAlgorithmsTest.csproj" />
+  <Project Path="DataStructureAndAlgortithmPerformance/DataStructureAndAlgortithmPerformance.csproj" />
+  <Project Path="DataStructuresAndAlgorithms/DataStructuresAndAlgorithms.csproj" />
+</Solution>
