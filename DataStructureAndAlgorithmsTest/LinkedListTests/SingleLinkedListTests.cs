@@ -579,7 +579,7 @@ public class TraversalAndInspectionTests
     [Fact]
     public void IsEmpty_ShouldReturnFalse_WhenListHasElements()
     {
-        var list = CreateList(42);
+            SingleLinkedList<int> list = CreateList(42);
         Assert.False(list.IsEmpty());
     }
 
@@ -588,7 +588,7 @@ public class TraversalAndInspectionTests
     [InlineData(0, new[] { 1, 2, 3 }, false)]
     public void Contains_ShouldReturnCorrectResult(int value, int[] values, bool expected)
     {
-        var list = CreateList(values);
+        SingleLinkedList<int> list = CreateList(values);
         Assert.Equal(expected, list.Contains(value));
     }
 
@@ -597,14 +597,14 @@ public class TraversalAndInspectionTests
     [InlineData(99, new[] { 1, 2, 3 }, -1)]
     public void IndexOf_ShouldReturnCorrectIndex(int value, int[] values, int expected)
     {
-        var list = CreateList(values);
+        SingleLinkedList<int> list = CreateList(values);
         Assert.Equal(expected, list.IndexOf(value));
     }
 
     [Fact]
     public void ToArray_ShouldReturnCorrectSequence()
     {
-        var list = CreateList(1, 2, 3);
+        SingleLinkedList<int> list = CreateList(1, 2, 3);
         Assert.Equal([1, 2, 3], list.ToArray());
     }
 
@@ -614,4 +614,62 @@ public class TraversalAndInspectionTests
         SingleLinkedList<int> list = new();
         Assert.Empty(list.ToArray());
     }
+    [Fact]
+    public void IsEmpty_ShouldReturnTrue_AfterClearIsCalled()
+    {
+        SingleLinkedList<int> list = CreateList(1, 2, 3);
+        list.Clear();
+        Assert.True(list.IsEmpty());
+    }
+}
+public class AdvancedFunctionalTests
+{
+    private static SingleLinkedList<int> CreateList(params int[] values)
+    {
+        SingleLinkedList<int> list = new();
+        foreach (int v in values)
+        {
+            list.InsertAtEnd(v);
+        }
+
+        return list;
+    }
+
+    [Fact]
+    public void Map_ShouldApplyFunctionToEachElement()
+    {
+        SingleLinkedList<int> list = CreateList(1, 2, 3);
+        SingleLinkedList<int> mapped = list.Map(x => x * 2);
+
+        Assert.Equal([2, 4, 6], mapped.ToArray());
+    }
+
+    [Fact]
+    public void Map_ShouldReturnEmptyList_WhenSourceIsEmpty()
+    {
+        SingleLinkedList<int> list = new();
+        SingleLinkedList<int> mapped = list.Map(x => x + 1);
+
+        Assert.Empty(mapped.ToArray());
+    }
+
+    [Fact]
+    public void Filter_ShouldReturnOnlyMatchingElements()
+    {
+        SingleLinkedList<int> list = CreateList(1, 2, 3, 4, 5);
+        var filtered = list.Filter(x => x % 2 == 0);
+
+        Assert.Equal([2, 4], filtered.ToArray());
+    }
+
+    [Fact]
+    public void Filter_ShouldReturnEmptyList_WhenNoMatch()
+    {
+        SingleLinkedList<int> list = CreateList(1, 3, 5);
+        SingleLinkedList<int> filtered = list.Filter(x => x % 2 == 0);
+
+        Assert.Empty(filtered.ToArray());
+    }
+
+    
 }

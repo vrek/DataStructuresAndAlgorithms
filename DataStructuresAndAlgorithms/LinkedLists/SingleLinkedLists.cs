@@ -100,9 +100,14 @@ public class SingleLinkedList<T>
 
     public T GetValueAtPosition(int position)
     {
+
         if (position < 0 || position >= GetLength())
         {
             throw new ArgumentOutOfRangeException(nameof(position), "Position is out of bounds.");
+        }
+        if( Head == null)
+        {
+            throw new ArgumentOutOfRangeException(nameof(position), "List is currently null");
         }
         Node current = Head;
         for (int i = 0; i < position; i++)
@@ -138,6 +143,10 @@ public class SingleLinkedList<T>
             {
                 current = current.Next;
             }
+        }
+        if (current.Next == null)
+        {
+            throw new ArgumentOutOfRangeException(nameof(position), "Position is out of bounds.");
         }
         current.Next = current.Next.Next;
     }
@@ -249,4 +258,46 @@ public class SingleLinkedList<T>
         }
         return -1;
     }
+    public void Clear()
+    {
+        Head = null;
+    }
+
+    public SingleLinkedList<TResult> Map<TResult>(Func<T, TResult> predicate)
+    {
+       if (Head == null)
+        {
+            return new SingleLinkedList<TResult>();
+        }
+        SingleLinkedList<TResult> result = new();
+        Node? current = Head;
+        while (current != null)
+        {
+            TResult mappedValue = predicate(current.Value);
+            result.InsertAtEnd(mappedValue);
+            current = current.Next;
+        }
+        return result;
+    }
+
+    public SingleLinkedList<T> Filter(Func<T, bool> predicate)
+    {
+        if(Head == null)
+        {
+            return new SingleLinkedList<T>();
+        }
+        SingleLinkedList<T> result = new();
+        Node? current = Head;
+        while (current != null)
+        {
+            if (predicate(current.Value))
+            {
+                result.InsertAtEnd(current.Value!);
+            }
+            current = current.Next;
+        }
+        return result;
+    }
+
+    
 }
