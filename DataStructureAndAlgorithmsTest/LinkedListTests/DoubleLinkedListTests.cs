@@ -30,7 +30,7 @@ public class DoubleLinkedListTests
         list.AddLast(5);
         list.AddLast(6);
         list.RemoveFirst();
-        Assert.Equal(new[] { 6 }, list.ToArray());
+        Assert.Equal([6], list.ToArray());
     }
 
     [Fact]
@@ -40,7 +40,7 @@ public class DoubleLinkedListTests
         list.AddLast(7);
         list.AddLast(8);
         list.RemoveLast();
-        Assert.Equal(new[] { 7 }, list.ToArray());
+        Assert.Equal([7], list.ToArray());
     }
 
     [Fact]
@@ -76,6 +76,6 @@ public class DoubleLinkedListTests
         list.AddLast('x');
         list.AddLast('y');
         list.AddLast('z');
-        Assert.Equal(new[] { 'x', 'y', 'z' }, list.ToArray());
+        Assert.Equal(['x', 'y', 'z'], list.ToArray());
     }
 }

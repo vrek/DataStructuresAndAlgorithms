@@ -70,10 +70,7 @@ public class DoubleLinkedList<T>
             throw new InvalidOperationException("List is empty.");
         }
         Head = Head.Next;
-        if (Head != null)
-        {
-            Head.Prev = null;
-        }
+        Head?.Prev = null;
     }
 
     public void RemoveLast()
@@ -107,6 +104,10 @@ public class DoubleLinkedList<T>
             if (current.Value!.Equals(v))
             {
                 return current;
+            }
+            if(current.Next == null)
+            {
+                break;
             }
             current = current.Next;
         }

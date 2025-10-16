@@ -8,7 +8,14 @@
 
   <ItemGroup>
     <Folder Include="BinaryTree\" />
-    <Folder Include="Sorting\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EditorConfigFiles Remove="C:\Users\Raymond\source\repos\DataStructuresAndAlgorithms\DataStructuresAndAlgorithms\.editorconfig" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="C:\Users\Raymond\source\repos\DataStructuresAndAlgorithms\DataStructuresAndAlgorithms\.editorconfig" />
   </ItemGroup>
 
 </Project>
