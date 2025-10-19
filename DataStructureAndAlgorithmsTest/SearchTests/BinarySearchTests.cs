@@ -41,8 +41,18 @@ public class BinarySearchTests
         { Enumerable.Range(1, 1000).ToArray(), 500, 1 },
         { Enumerable.Range(1, 1000).ToArray(), 1001, -1 }
     };
-
-
-
+    [Theory]
+    [InlineData(new[] { 5, 3, 8, 1 }, 3, 1)] 
+    [InlineData(new[] { 10, 20, 30, 40 }, 30, 2)]
+    [InlineData(new[] { 7, 2, 9, 4 }, 7, 2)]
+    [InlineData(new[] { 1, 2, 3, 4, 5 }, 5, 4)] 
+    [InlineData(new[] { 5, 4, 3, 2, 1 }, 1, 0)] 
+    [InlineData(new int[0], 7, -1)]
+    [InlineData(new[] { 1, 2, 3 }, 99, -1)]      
+    public void BinarySearchInUnsortedArray_ReturnsCorrectIndex(int[] input, int target, int expectedIndex)
+    {
+        int result = BinarySearch.BinarySearchInUnsortedArray(input, target);
+        Assert.Equal(expectedIndex, result);
+    }
 }
 

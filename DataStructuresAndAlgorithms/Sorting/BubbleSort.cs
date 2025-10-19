@@ -29,8 +29,8 @@ public class BubbleSorter<T> : ISorter<T> where T : IComparable<T>
         }
     }
 
-    private static bool IsNumeric<T>(T value) =>
-        value is 
+    private static bool IsNumeric(T value) =>
+        value is
             byte or sbyte
             or short or ushort
             or int or uint

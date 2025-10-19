@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace DataStructuresAndAlgorithms.LinkedLists;
+﻿namespace DataStructuresAndAlgorithms.LinkedLists;
 
 public class DoubleLinkedList<T>
 {

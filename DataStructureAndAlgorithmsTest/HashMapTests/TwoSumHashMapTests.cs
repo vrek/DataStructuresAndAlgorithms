@@ -1,7 +1,4 @@
 ﻿using DataStructuresAndAlgorithms.Hashmaps;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace DataStructureAndAlgorithmsTest.HashMapTests;
 

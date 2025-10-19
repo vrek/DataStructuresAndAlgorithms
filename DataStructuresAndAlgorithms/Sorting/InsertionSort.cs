@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace DataStructuresAndAlgorithms.Sorting;
+﻿namespace DataStructuresAndAlgorithms.Sorting;
 
 public class InsertionSorter<T> : ISorter<T> where T : IComparable<T>
 {
     public void Sort(List<T> list)
     {
-        if (list == null)
-            throw new ArgumentNullException(nameof(list));
+        ArgumentNullException.ThrowIfNull(list);
 
         for (int i = 1; i < list.Count; i++)
         {
